@@ -142,20 +142,20 @@ class Bomb:
         screen.blit(self.img, self.rct)
 
 # Scoreクラス
-class Score:
-    def __init__(self, score: int=0):
+class Score: # スコアクラスの定義
+    def __init__(self, score: int=0): # イニシャライザ
         self.fonto = pg.font.SysFont("hgp創英角ﾎﾟｯﾌﾟ体", 30)
         # self.color = self.fonto.set_colorkey((0, 0, 255))
         # self.score = 0
         self.score = score
-        self.img = self.fonto.render(f"スコア:{self.score}", 0, (0, 0, 255))
+        self.img = self.fonto.render(f"スコア:{self.score}", 0, (0, 0, 255)) # スコアとスコア数の文字列を青で表示
         self.rct = self.img.get_rect()
-        self.rct.center = (100, HEIGHT-50)
+        self.rct.center = (100, HEIGHT-50) # テキスト位置設定
     
-    def update(self, screen: pg.Surface):
+    def update(self, screen: pg.Surface): # updateメソッド
         self.img = self.fonto.render(f"スコア:{self.score}", 0, (0, 0, 255))
         self.rct = self.img.get_rect()
-        self.rct.center = (100, HEIGHT-50)
+        self.rct.center = (100, HEIGHT-50) # テキスト位置設定
         screen.blit(self.img, self.rct)
 
 
