@@ -7,6 +7,7 @@ import pygame as pg
 
 WIDTH = 1100  # ゲームウィンドウの幅
 HEIGHT = 650  # ゲームウィンドウの高さ
+NUM_OF_BOMBS = 5
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -146,7 +147,8 @@ def main():
     screen = pg.display.set_mode((WIDTH, HEIGHT))    
     bg_img = pg.image.load("fig/pg_bg.jpg")
     bird = Bird((300, 200))
-    bomb = Bomb((255, 0, 0), 10)
+    #bomb = Bomb((255, 0, 0), 10)
+    bombs = [Bomb((255, 0, 0), 10) for i in range(NUM_OF_BOMBS)]
     clock = pg.time.Clock()
     tmr = 0
     beam = None
@@ -169,15 +171,21 @@ def main():
                 time.sleep(1)
                 return
         
-        if bomb != None and beam != None:
-            if bomb.rct.colliderect(beam.rct):
-                bomb = None
-                beam = None
-                bird.change_img(6, screen)
+        for i, bomb, in enumerate(bombs):
+            if bomb[i] != None and beam != None:
+                if bomb.rct.colliderect(beam.rct):
+                    bomb[i] = None
+                    beam = None
+                    bird.change_img(6, screen)
+        
+        bombs = [bomb for bomb in bombs if bomb != None]
+
         key_lst = pg.key.get_pressed()
         bird.update(key_lst, screen)
         # beam.update(screen)
         if bomb != None:   
+            bomb.update(screen)
+        for bomb in bombs:
             bomb.update(screen)
         pg.display.update()
         tmr += 1
